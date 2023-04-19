@@ -1,22 +1,30 @@
 import pygame
 from numpy import *
+import colour as c
+
+
+XYZS = [0.2, 0.3, 0.5]
+XYZT = [0.5, 0.1, 0.7]
+
+RGBS = c.XYZ_to_RGB(XYZS)
+RGBT = c.XYZ_to_RGB(XYZT)
+
 
 # initialize window
-
 pygame.init()
 width = 800
 height = 500
 win = pygame.display.set_mode([width, height])
 
-
+# function for drawing the squares
 def squarees(col, side):
     color = col
     if side == "left":
-        pygame.draw.rect(win, color, pygame.Rect((250, 175), (150, 150)))
+        pygame.draw.rect(win, color, pygame.Rect((250, 175), (140, 140)))
     if side == "right":
-        pygame.draw.rect(win, color, pygame.Rect((400, 175), (150, 150)))
+        pygame.draw.rect(win, color, pygame.Rect((410, 175), (140, 140)))
 
-
+# function for generating a random color
 def randomCol():
     x = random.randint(256)
     y = random.randint(256)
@@ -24,32 +32,30 @@ def randomCol():
     return ((x, y, z))
 
 
-red = (255, 0, 0)
-# surf = pygame.surface([width, height])
-# draw an elliptical arc
-# arc(surface, color, rect, start_angle, stop_angle) -> Rect
-# pygame.draw.arc(win, red, (300, 200, 400, 300), 0.5 * PI, 1.5)
-# pygame.draw.circle(win, red, (400, 250), 100)
-# pygame.draw.rect(win, red, pygame.Rect(30, 30, 60, 60))
-
-
-# Keeps window open
+# font used on buttons
 smallfont = pygame.font.SysFont('Corbel', 35)
-
-# rendering a text written in
-# this font
+# rendering a text written in this font
 text1 = smallfont.render('Same', True, (255, 255, 255))
 text2 = smallfont.render('Diff', True, (255, 255, 255))
 
 # startup stuff
 col1 = randomCol()
 col2 = randomCol()
-squarees(col1, "right")
-LastB = col1
-squarees(col2, "left")
-LastF = col2
+squarees(RGBT, "right")
+LastB = RGBT
+squarees(RGBS, "left")
+LastF = RGBS
+Current = RGBT
+Start = RGBS
+# Many prints for many things
+print(LastB)
+print(LastF)
+print(Current)
+print("")
+print(Start)
+print("")
 
-
+# function for finding the midpoint between two points
 def findMid():
     P1 = LastF
     P2 = LastB
@@ -72,16 +78,28 @@ while True:
 
             # if the mouse is clicked on the
             # button the game is terminated
-            if width - width - 140 / 4 <= mouse[0] <= width - width / 4 and height / 2 <= mouse[
-                1] <= height - height / 4 + 40:
-                LastF = findMid()
-                squarees(findMid(), "right")
-                print(findMid())
+            if width - width / 4 - 140  <= mouse[0] <= width - width / 4 and height / 2 <= mouse[1] <= height - height / 4 + 40:
+                LastF = Current
+                Current = findMid()
+                squarees(Current, "right")
+
+                print(LastB)
+                print(LastF)
+                print(Current)
+                print("")
+                print(Start)
+                print("")
 
             if width / 4 <= mouse[0] <= width / 4 + 140 and height / 2 <= mouse[1] <= height - height / 4 + 40:
-                LastB = findMid()
-                squarees(findMid(), "left")
-                print(findMid())
+                LastB = Current
+                Current = findMid()
+                squarees(Current, "right")
+                print(LastB)
+                print(LastF)
+                print(Current)
+                print("")
+                print(Start)
+                print("")
 
     # fills the screen with a color
     # win.fill((60, 25, 60))
