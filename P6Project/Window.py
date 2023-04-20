@@ -1,13 +1,7 @@
 import pygame
 from numpy import *
-import colour as c
-
-
-XYZS = [0.2, 0.3, 0.5]
-XYZT = [0.5, 0.1, 0.7]
-
-RGBS = c.XYZ_to_RGB(XYZS)
-RGBT = c.XYZ_to_RGB(XYZT)
+from colormath.color_objects import sRGBColor, XYZColor
+from colormath.color_conversions import convert_color
 
 
 # initialize window
@@ -31,6 +25,15 @@ def randomCol():
     z = random.randint(256)
     return ((x, y, z))
 
+def XYZtoRGB(x, y, z):
+    xyz = XYZColor(x, y, z)                 # The XYZ color
+    rgb = convert_color(xyz, sRGBColor)     # Converts the XYZ color to sRGB
+    rgbb = rgb.get_value_tuple()            # Converts the color to a tuple
+    rgblist = []                            # Empty list
+    for i in rgbb:                          # For loop that converts tuple to floats and appends to a list
+        x = float(i) * 255
+        rgblist.append(x)
+    return rgblist
 
 # font used on buttons
 smallfont = pygame.font.SysFont('Corbel', 35)
@@ -39,14 +42,16 @@ text1 = smallfont.render('Same', True, (255, 255, 255))
 text2 = smallfont.render('Diff', True, (255, 255, 255))
 
 # startup stuff
-col1 = randomCol()
-col2 = randomCol()
-squarees(RGBT, "right")
-LastB = RGBT
-squarees(RGBS, "left")
-LastF = RGBS
-Current = RGBT
-Start = RGBS
+col1 = [0.5, 0.3, 0.5]
+col1rgb = XYZtoRGB(col1[0], col1[1], col1[2])
+col2 = [0.4, 0.6, 0.3]
+col2rgb = XYZtoRGB(col2[0], col2[1], col2[2])
+squarees(col1rgb, "right")
+LastB = col1
+squarees(col2rgb, "left")
+LastF = col2
+Current = col1
+Start = col2
 # Many prints for many things
 print(LastB)
 print(LastF)
@@ -62,7 +67,6 @@ def findMid():
     x = (P1[0] + P2[0]) / 2
     y = (P1[1] + P2[1]) / 2
     z = (P1[2] + P2[2]) / 2
-    Current = [x, y, z]
     return [x, y, z]
 
 
@@ -81,11 +85,13 @@ while True:
             if width - width / 4 - 140  <= mouse[0] <= width - width / 4 and height / 2 <= mouse[1] <= height - height / 4 + 40:
                 LastF = Current
                 Current = findMid()
-                squarees(Current, "right")
+                toRGB = XYZtoRGB(Current[0], Current[1], Current[2])
+                squarees(toRGB, "right")
 
                 print(LastB)
                 print(LastF)
                 print(Current)
+                print(toRGB)
                 print("")
                 print(Start)
                 print("")
@@ -93,10 +99,13 @@ while True:
             if width / 4 <= mouse[0] <= width / 4 + 140 and height / 2 <= mouse[1] <= height - height / 4 + 40:
                 LastB = Current
                 Current = findMid()
-                squarees(Current, "right")
+                toRGB = XYZtoRGB(Current[0], Current[1], Current[2])
+                squarees(toRGB, "right")
+
                 print(LastB)
                 print(LastF)
                 print(Current)
+                print(toRGB)
                 print("")
                 print(Start)
                 print("")
