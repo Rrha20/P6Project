@@ -1,5 +1,5 @@
 import pygame
-from numpy import *
+from numpy import random
 from colormath.color_objects import sRGBColor, XYZColor
 from colormath.color_conversions import convert_color
 
@@ -32,6 +32,8 @@ def XYZtoRGB(x, y, z):
     rgblist = []                            # Empty list
     for i in rgbb:                          # For loop that converts tuple to floats and appends to a list
         x = float(i) * 255
+        if x > 255:
+            x = 255
         rgblist.append(x)
     return rgblist
 
@@ -42,10 +44,12 @@ text1 = smallfont.render('Same', True, (255, 255, 255))
 text2 = smallfont.render('Diff', True, (255, 255, 255))
 
 # startup stuff
-col1 = [0.5, 0.3, 0.5]
+col1 = [0.2, 0.45, 0.1]
 col1rgb = XYZtoRGB(col1[0], col1[1], col1[2])
-col2 = [0.4, 0.6, 0.3]
+print(col1rgb)
+col2 = [0.455, 0.25, 0.3]
 col2rgb = XYZtoRGB(col2[0], col2[1], col2[2])
+print(col2rgb)
 squarees(col1rgb, "right")
 LastB = col1
 squarees(col2rgb, "left")
@@ -64,9 +68,11 @@ print("")
 def findMid():
     P1 = LastF
     P2 = LastB
-    x = (P1[0] + P2[0]) / 2
-    y = (P1[1] + P2[1]) / 2
-    z = (P1[2] + P2[2]) / 2
+    Perc1 = 0.25
+    Perc2 = 0.75
+    x = (P1[0]*Perc1 + P2[0]*Perc2)
+    y = (P1[1]*Perc1+ P2[1]*Perc2)
+    z = (P1[2]*Perc1 + P2[2]*Perc2)
     return [x, y, z]
 
 
