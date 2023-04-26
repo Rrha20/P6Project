@@ -3,12 +3,12 @@ from numpy import random
 from colormath.color_objects import sRGBColor, XYZColor
 from colormath.color_conversions import convert_color
 
-
 # initialize window
 pygame.init()
 width = 800
 height = 500
 win = pygame.display.set_mode([width, height])
+
 
 # function for drawing the squares
 def squarees(col, side):
@@ -18,23 +18,37 @@ def squarees(col, side):
     if side == "right":
         pygame.draw.rect(win, color, pygame.Rect((410, 175), (140, 140)))
 
+
 # function for generating a random color
 def randomCol():
     x = random.randint(256)
     y = random.randint(256)
     z = random.randint(256)
-    return ((x, y, z))
+    return x, y, z
+
 
 def XYZtoRGB(x, y, z):
-    xyz = XYZColor(x, y, z)                 # The XYZ color
-    rgb = convert_color(xyz, sRGBColor)     # Converts the XYZ color to sRGB
-    rgbb = rgb.get_value_tuple()            # Converts the color to a tuple
-    rgblist = []                            # Empty list
-    for i in rgbb:                          # For loop that converts tuple to floats and appends to a list
+    xyz = XYZColor(x, y, z)  # The XYZ color
+    rgb = convert_color(xyz, sRGBColor)  # Converts the XYZ color to sRGB
+    rgbb = rgb.get_value_tuple()  # Converts the color to a tuple
+    rgblist = []  # Empty list
+    for i in rgbb:  # For loop that converts tuple to floats and appends to a list
         x = float(i) * 255
         if x > 255:
             x = 255
         rgblist.append(x)
+    return rgblist
+
+def RGBtoXYZ(r, g, b):
+    rgb = sRGBColor(r/255, g/255, b/255)  # The XYZ color
+    xyz = convert_color(rgb, XYZColor)  # Converts the XYZ color to sRGB
+    xyzz = xyz.get_value_tuple()  # Converts the color to a tuple
+    rgblist = []  # Empty list
+    for i in xyzz:  # For loop that converts tuple to floats and appends to a list
+        p = float(i)
+        if p > 255:
+            p = 255
+        rgblist.append(p)
     return rgblist
 
 # font used on buttons
@@ -43,11 +57,21 @@ smallfont = pygame.font.SysFont('Corbel', 35)
 text1 = smallfont.render('Same', True, (255, 255, 255))
 text2 = smallfont.render('Diff', True, (255, 255, 255))
 
+print("Red")
+print(RGBtoXYZ(255,0,0))
+print("Green")
+print(RGBtoXYZ(0,255,0))
+print("Blue")
+print(RGBtoXYZ(0,0,255))
+print("Black")
+print(RGBtoXYZ(0,0,0))
+print("White")
+print(RGBtoXYZ(255,255,255))
 # startup stuff
-col1 = [0.2, 0.45, 0.1]
+col1 = [0.412424, 0.212656, 0.0193324]
 col1rgb = XYZtoRGB(col1[0], col1[1], col1[2])
 print(col1rgb)
-col2 = [0.455, 0.25, 0.3]
+col2 = [0.357579, 0.715158, 0.119193]
 col2rgb = XYZtoRGB(col2[0], col2[1], col2[2])
 print(col2rgb)
 squarees(col1rgb, "right")
@@ -64,15 +88,16 @@ print("")
 print(Start)
 print("")
 
+
 # function for finding the midpoint between two points
 def findMid():
     P1 = LastF
     P2 = LastB
     Perc1 = 0.25
     Perc2 = 0.75
-    x = (P1[0]*Perc1 + P2[0]*Perc2)
-    y = (P1[1]*Perc1+ P2[1]*Perc2)
-    z = (P1[2]*Perc1 + P2[2]*Perc2)
+    x = (P1[0] * Perc1 + P2[0] * Perc2)
+    y = (P1[1] * Perc1 + P2[1] * Perc2)
+    z = (P1[2] * Perc1 + P2[2] * Perc2)
     return [x, y, z]
 
 
@@ -88,7 +113,8 @@ while True:
 
             # if the mouse is clicked on the
             # button the game is terminated
-            if width - width / 4 - 140  <= mouse[0] <= width - width / 4 and height / 2 <= mouse[1] <= height - height / 4 + 40:
+            if width - width / 4 - 140 <= mouse[0] <= width - width / 4 and height / 2 <= mouse[
+                1] <= height - height / 4 + 40:
                 LastF = Current
                 Current = findMid()
                 toRGB = XYZtoRGB(Current[0], Current[1], Current[2])
