@@ -68,10 +68,16 @@ print(RGBtoXYZ(0,0,0))
 print("White")
 print(RGBtoXYZ(255,255,255))
 # startup stuff
-col1 = [0.412424, 0.212656, 0.0193324]
+col1 = [0.4, 0.3, 0.7]
 col1rgb = XYZtoRGB(col1[0], col1[1], col1[2])
 print(col1rgb)
-col2 = [0.357579, 0.715158, 0.119193]
+#col2 = [0.357579, 0.715158, 0.119193]
+Fun1 = [0.8461142062048901, -0.02520778340590566, 0.5324052194654272]
+col2 = []
+for i in col1:
+    x = i + Fun1[0]/5
+    col2.append(x)
+
 col2rgb = XYZtoRGB(col2[0], col2[1], col2[2])
 print(col2rgb)
 squarees(col1rgb, "right")

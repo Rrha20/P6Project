@@ -29,16 +29,16 @@ for i in range(num_functions):
     vector = points[i]
 
     # Generate a function
-    a, b, c, d = np.random.normal(size=4)
+    a, b, c = np.random.normal(size=3)
     direction = np.array([a, b, c])
     direction /= np.linalg.norm(direction)
-    distance = np.abs(np.dot(direction, [x0, y0, z0]) + d) / np.linalg.norm(direction)
+    distance = np.abs(np.dot(direction, [x0, y0, z0]) ) / np.linalg.norm(direction)
     if distance > threshold:
         direction *= threshold / distance
         distance = threshold
-    fi = f"0 = {direction[0]:.3f}x + {direction[1]:.3f}y + {direction[2]:.3f}z + {d:.3f}"
+    fi = f"0 = {direction[0]:.3f}x + {direction[1]:.3f}y + {direction[2]:.3f}z"
     functions.append(fi)
-    function_coeffs = [direction[0], direction[1], direction[2], d]
+    function_coeffs = [direction[0], direction[1], direction[2]]
     Coeefs.append(function_coeffs)
 
 for i in functions:
