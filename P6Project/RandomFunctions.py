@@ -44,4 +44,4 @@ for i in range(num_functions):
 for i in functions:
     print(i)
 for i in Coeefs:
-    print(i)
+    print(str(i) + ", ")
