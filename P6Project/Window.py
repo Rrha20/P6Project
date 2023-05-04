@@ -2,6 +2,8 @@ import pygame
 from numpy import random
 from colormath.color_objects import sRGBColor, XYZColor
 from colormath.color_conversions import convert_color
+import csv
+
 
 # initialize window
 pygame.init()
@@ -20,6 +22,11 @@ def squarees(col, side):
 
 
 # function for generating a random color
+with open('output.csv', 'w', newline='') as csvfile:
+    fieldnames = ['LastB', 'LastF', 'Current']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+
 def randomCol():
     x = random.randint(256)
     y = random.randint(256)
