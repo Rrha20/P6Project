@@ -5,7 +5,7 @@ from scipy.spatial.transform import Rotation
 x0, y0, z0 = 0, 0, 0
 
 # Define the number of functions and the minimum angle between vectors
-num_functions = 10
+num_functions = 5
 min_angle = np.pi / (num_functions + 1)
 
 # Generate a spherical Fibonacci sequence of unit vectors
@@ -32,7 +32,7 @@ for i in range(num_functions):
     a, b, c = np.random.normal(size=3)
     direction = np.array([a, b, c])
     direction /= np.linalg.norm(direction)
-    distance = np.abs(np.dot(direction, [x0, y0, z0]) ) / np.linalg.norm(direction)
+    distance = np.abs(np.dot(direction, [x0, y0, z0])) / np.linalg.norm(direction)
     if distance > threshold:
         direction *= threshold / distance
         distance = threshold

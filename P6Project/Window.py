@@ -1,17 +1,21 @@
-import pygame
-from numpy import random
-from colormath.color_objects import sRGBColor, XYZColor
-from colormath.color_conversions import convert_color
 import csv
 import time
-import datetime
+
+import pygame
+from colormath.color_conversions import convert_color
+from colormath.color_objects import sRGBColor, XYZColor
 
 # initialize window
 pygame.init()
 width = 800
 height = 500
 win = pygame.display.set_mode([width, height])
-curCol = 2
+curCol = 1
+
+Color1 = True
+Color2 = True
+Color3 = True
+
 
 # function for drawing the squares
 def squarees(col, side):
@@ -21,11 +25,13 @@ def squarees(col, side):
     if side == "right":
         pygame.draw.rect(win, color, pygame.Rect((410, 175), (140, 140)))
 
+
 def toBlack():
     colorer = (0, 0, 0)
     squarees(colorer, "left")
     squarees(colorer, "right")
     pygame.display.update()
+
 
 '''
 def toString(a, b, c):
@@ -41,6 +47,7 @@ def randomCol():
     return x, y, z
 '''
 
+
 def XYZtoRGB(x, y, z):
     xyz = XYZColor(x, y, z)  # The XYZ color
     rgb = convert_color(xyz, sRGBColor)  # Converts the XYZ color to sRGB
@@ -53,8 +60,9 @@ def XYZtoRGB(x, y, z):
         rgblist.append(x)
     return rgblist
 
+
 def RGBtoXYZ(r, g, b):
-    rgb = sRGBColor(r/255, g/255, b/255)  # The XYZ color
+    rgb = sRGBColor(r / 255, g / 255, b / 255)  # The XYZ color
     xyz = convert_color(rgb, XYZColor)  # Converts the XYZ color to sRGB
     xyzz = xyz.get_value_tuple()  # Converts the color to a tuple
     rgblist = []  # Empty list
@@ -64,6 +72,15 @@ def RGBtoXYZ(r, g, b):
             p = 255
         rgblist.append(p)
     return rgblist
+
+
+def finddiff(F, B):
+    diff1 = abs(F[0] - B[0])
+    diff2 = abs(F[1] - B[1])
+    diff3 = abs(F[2] - B[2])
+    total = diff3 + diff2 + diff1
+    return total
+
 
 def changeSquare(x):
     f = 0
@@ -75,20 +92,20 @@ def changeSquare(x):
         f = 1
     return f
 
+
 def findMid(F, B):
     P1 = F
-    print(P1)
+    # print(P1)
     P2 = B
-    print(P2)
+    # print(P2)
     Perc1 = 0.25
     Perc2 = 0.75
     a = (P1[0] * Perc1 + P2[0] * Perc2)
-    print(P1[0], Perc1, P2[0], Perc2)
+    # print(P1[0], Perc1, P2[0], Perc2)
     b = (P1[1] * Perc1 + P2[1] * Perc2)
     c = (P1[2] * Perc1 + P2[2] * Perc2)
-    print(a, b, c)
+    # print(a, b, c)
     return [a, b, c]
-
 
 
 # function for generating a random color
@@ -102,36 +119,39 @@ with open('data.csv', mode='a') as data_file:
 
     # Add the values of LastB, LastF, and Current to the CSV file
 
-
-
-
     # font used on buttons
     smallfont = pygame.font.SysFont('Corbel', 35)
     # rendering a text written in this font
     text1 = smallfont.render('Same', True, (255, 255, 255))
     text2 = smallfont.render('Diff', True, (255, 255, 255))
 
-    Directions = [  [0.03797883160764542,   -0.7874845025153955,    -0.6151632032621898],
-                    [0.6722625212766092,    -0.17205248450998017,   0.7200423911553816],
-                    [0.1363051541794393,    -0.19763978184289696,   -0.9707519876761579],
-                    [-0.3771225811044923,   0.9063296619975425,     0.19064391572905182],
-                    [-0.05610162182861117,  -0.8681803359860506,    -0.4930674520137664],
-                    [0.17498981461000856,   -0.7077695917901823,    0.6844273297581809],
-                    [0.15424748415451592,   -0.4810405392959806,    0.8630224291325426],
-                    [0.13418890295728594,   0.06769853659334661,    -0.9886406053092496],
-                    [0.643368927393114,     0.029841408658842394,   -0.76497445290303],
-                    [-0.8168235261819979,   0.27412174611139833,    0.507598852820261]]
+    Directions = [[-0.860898165853627, 0.4207242095148357, 0.2860865036277969],
+                  [0.3907130486288363, -0.8869216918721375, 0.24640054001122996],
+                  [-0.3544532794614195, -0.5876457338666639, -0.7273481725744246],
+                  [0.6718842280712661, 0.6548995349494559, -0.3459453471172367],
+                  [-0.5543168124612634, 0.2353554443646269, 0.7983361987475661],
+                  [0.860898165853627, -0.4207242095148357, -0.2860865036277969],
+                  [-0.3907130486288363, 0.8869216918721375, -0.24640054001122996],
+                  [0.3544532794614195, 0.5876457338666639, 0.7273481725744246],
+                  [-0.6718842280712661, -0.6548995349494559, 0.3459453471172367],
+                  [0.5543168124612634, -0.2353554443646269, -0.7983361987475661],
+                  ]
 
     # Color 1
     col1T = [0.4, 0.3, 0.7]
-    Fun1 = Directions[7]
+    Fun1 = Directions[1]
     col1P = []
     for i in range(3):
-        x = col1T[i] + Fun1[i]/10
+        x = col1T[i] + Fun1[i] / 5
         col1P.append(x)
-    #print(col1P)
+    # print(col1P)
+    print("color 1")
     col1rgbP = XYZtoRGB(col1P[0], col1P[1], col1P[2])
     col1rgbT = XYZtoRGB(col1T[0], col1T[1], col1T[2])
+    print(col1T)
+    print(col1P)
+    print(col1rgbT)
+    print(col1rgbP)
     squarees(col1rgbP, "right")
     LastB1 = col1P
     squarees(col1rgbT, "left")
@@ -140,34 +160,43 @@ with open('data.csv', mode='a') as data_file:
     Start1 = col1T
 
     # Color 2
-    col2T = [0.6, 0.2, 0.4]
-    Fun2 = Directions[4]
+    col2T = [0.3, 0.2, 0.4]
+    Fun2 = Directions[1]
     col2P = []
     for i in range(3):
-        x = col2T[i] + Fun2[i]/10
+        x = col2T[i] + Fun2[i] / 5
         col2P.append(x)
-    #print(col2P)
     col2rgbP = XYZtoRGB(col2P[0], col2P[1], col2P[2])
     col2rgbT = XYZtoRGB(col2T[0], col2T[1], col2T[2])
-    #squarees(col2rgbP, "right")
+    print("color3")
+    print(col2T)
+    print(col2P)
+    print(col2rgbT)
+    print(col2rgbP)
+    # squarees(col2rgbP, "right")
     LastB2 = col2P
-    #squarees(col2rgbT, "left")
+    # squarees(col2rgbT, "left")
     LastF2 = col2T
-    Current2 = col1P
+    Current2 = col2P
     Start2 = col2T
 
     # Color 3
-    col3T = [0.2, 0.5, 0.1]
-    Fun3 = Directions[3]
+    col3T = [0.2, 0.4, 0.1]
+    Fun3 = Directions[1]
     col3P = []
     for i in range(3):
-        x = col3T[i] + Fun3[i]/10
+        x = col3T[i] + Fun3[i] / 5
         col3P.append(x)
     col3rgbP = XYZtoRGB(col3P[0], col3P[1], col3P[2])
     col3rgbT = XYZtoRGB(col3T[0], col3T[1], col3T[2])
-    #squarees(col3rgbP, "right")
+    print("color3")
+    print(col3T)
+    print(col3P)
+    print(col3rgbT)
+    print(col3rgbP)
+    # squarees(col3rgbP, "right")
     LastB3 = col3P
-    #squarees(col3rgbT, "left")
+    # squarees(col3rgbT, "left")
     LastF3 = col3T
     Current3 = col3P
     Start3 = col3T
@@ -175,6 +204,8 @@ with open('data.csv', mode='a') as data_file:
 
     # function for finding the midpoint between two points
     def Sames(g, current):
+        LB = 0
+        Cur = 0
         if g == 1:
             Current1 = current
             LastF1 = Current1
@@ -182,6 +213,8 @@ with open('data.csv', mode='a') as data_file:
             toRGB = XYZtoRGB(Current1[0], Current1[1], Current1[2])
             squarees(toRGB, "right")
             squarees(col1rgbT, "left")
+            LB = LastB1
+            Cur = Current1
         if g == 2:
             Current2 = current
             LastF2 = Current2
@@ -189,6 +222,8 @@ with open('data.csv', mode='a') as data_file:
             toRGB = XYZtoRGB(Current2[0], Current2[1], Current2[2])
             squarees(toRGB, "right")
             squarees(col2rgbT, "left")
+            LB = LastB2
+            Cur = Current2
         if g == 3:
             Current3 = current
             LastF3 = Current3
@@ -196,29 +231,49 @@ with open('data.csv', mode='a') as data_file:
             toRGB = XYZtoRGB(Current3[0], Current3[1], Current3[2])
             squarees(toRGB, "right")
             squarees(col3rgbT, "left")
+            LB = LastB3
+            Cur = Current3
+        returnerer = [LB, Cur]
+        return returnerer
+
 
     def Diff(g, current):
+        LB = 0
+        Cur = 0
         if g == 1:
             Current1 = current
             LastB1 = Current1
             Current1 = findMid(LastF1, LastB1)
-            toRGB = XYZtoRGB(Current1[0], Current1[1], Current1[2])
-            squarees(toRGB, "right")
+            toRGB1 = XYZtoRGB(Current1[0], Current1[1], Current1[2])
+            squarees(toRGB1, "right")
             squarees(col1rgbT, "left")
+            LB = LastB1
+            Cur = Current1
         if g == 2:
             Current2 = current
+            print(Current2)
             LastB2 = Current2
             Current2 = findMid(LastF2, LastB2)
-            toRGB = XYZtoRGB(Current2[0], Current2[1], Current2[2])
-            squarees(toRGB, "right")
+            print(Current2)
+            toRGB2 = XYZtoRGB(Current2[0], Current2[1], Current2[2])
+            print(toRGB2)
+            print(col2rgbT)
+            squarees(toRGB2, "right")
             squarees(col2rgbT, "left")
+            LB = LastB2
+            Cur = Current2
         if g == 3:
             Current3 = current
             LastB3 = Current3
             Current3 = findMid(LastF3, LastB3)
-            toRGB = XYZtoRGB(Current3[0], Current3[1], Current3[2])
-            squarees(toRGB, "right")
+            toRGB3 = XYZtoRGB(Current3[0], Current3[1], Current3[2])
+            squarees(toRGB3, "right")
             squarees(col3rgbT, "left")
+            LB = LastB3
+            Cur = Current3
+        returnerer = [LB, Cur]
+        return returnerer
+
 
     while True:
 
@@ -240,19 +295,46 @@ with open('data.csv', mode='a') as data_file:
                     print(curCol)
                     if curCol == 1:
                         curCol = 2
-                        c = Current1
+                        if Color2:
+                            c = Current2
+                            take = Sames(curCol, c)
+                            LastF2 = take[0]
+                            Current2 = take[1]
+                            t = finddiff(LastF2, LastB2)
+                            if t < 0.05:
+                                if Color2:
+                                    data_writer.writerow(['Color2'])
+                                    Color2 = False
+                                    data_writer.writerow([LastB2, LastF2, Current2])
                     elif curCol == 2:
                         curCol = 3
-                        c = Current2
+                        if Color3:
+                            c = Current3
+                            take = Sames(curCol, c)
+                            LastF3 = take[0]
+                            Current3 = take[1]
+                            t = finddiff(LastF3, LastB3)
+                            print(t)
+                            if t < 0.05:
+                                if Color3:
+                                    data_writer.writerow(['Color3'])
+                                    Color3 = False
+                                    data_writer.writerow([LastB3, LastF3, Current3])
                     elif curCol == 3:
                         curCol = 1
-                        c = Current3
-                    Sames(curCol, c)
+                        if Color1:
+                            c = Current1
+                            take = Sames(curCol, c)
+                            LastF1 = take[0]
+                            Current1 = take[1]
+                            t = finddiff(LastF1, LastB1)
+                            if t < 0.05:
+                                if Color1:
+                                    data_writer.writerow(['Color1'])
+                                    Color1 = False
+                                    data_writer.writerow([LastB1, LastF1, Current1])
 
-                    data_writer.writerow([LastB1, LastF1, Current1])
                     print(curCol)
-
-
 
                 if width / 4 <= mouse[0] <= width / 4 + 140 and height / 2 <= mouse[1] <= height - height / 4 + 40:
                     # DIFF
@@ -260,14 +342,46 @@ with open('data.csv', mode='a') as data_file:
                     time.sleep(1)
                     if curCol == 1:
                         curCol = 2
-                        c = Current1
+                        if Color2:
+                            c = Current2
+                            take = Diff(curCol, c)
+                            LastB2 = take[0]
+                            Current2 = take[1]
+                            t = finddiff(LastF2, LastB2)
+                            print(t)
+                            if t < 0.05:
+                                if Color2:
+                                    data_writer.writerow(['Color2'])
+                                    Color2 = False
+                                    data_writer.writerow([LastB2, LastF2, Current2])
                     elif curCol == 2:
                         curCol = 3
-                        c = Current2
+                        if Color3:
+                            c = Current3
+                            Diff(curCol, c)
+                            take = Diff(curCol, c)
+                            LastB3 = take[0]
+                            Current3 = take[1]
+                            t = finddiff(LastF3, LastB3)
+                            if t < 0.05:
+                                if Color3:
+                                    data_writer.writerow(['Color3'])
+                                    Color3 = False
+                                    data_writer.writerow([LastB3, LastF3, Current3])
                     elif curCol == 3:
                         curCol = 1
-                        c = Current3
-                    Diff(curCol, c)
+                        if Color1:
+                            c = Current1
+                            Diff(curCol, c)
+                            take = Diff(curCol, c)
+                            LastB1 = take[0]
+                            Current1 = take[1]
+                            t = finddiff(LastF1, LastB1)
+                            if t < 0.05:
+                                if Color1:
+                                    data_writer.writerow(['Color1'])
+                                    Color1 = False
+                                    data_writer.writerow([LastB1, LastF1, Current1])
 
                     '''
                     print(LastB1)
@@ -278,12 +392,10 @@ with open('data.csv', mode='a') as data_file:
                     print(Start1)
                     print("")
                     '''
-                    data_writer.writerow([LastB1, LastF1, Current1])
-                    #curCol = changeSquare(curCol)
+                    # data_writer.writerow([LastB1, LastF1, Current1])
+                    # curCol = changeSquare(curCol)
 
                     print(curCol)
-
-
 
         # fills the screen with a color
         # win.fill((60, 25, 60))
