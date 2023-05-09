@@ -160,7 +160,7 @@ with open('data.csv', mode='a') as data_file:
     Start1 = col1T
 
     # Color 2
-    col2T = [0.3, 0.2, 0.4]
+    col2T = [0.2, 0.2, 0.5]
     Fun2 = Directions[1]
     col2P = []
     for i in range(3):
@@ -251,13 +251,13 @@ with open('data.csv', mode='a') as data_file:
             Cur = Current1
         if g == 2:
             Current2 = current
-            print(Current2)
+            #print(Current2)
             LastB2 = Current2
             Current2 = findMid(LastF2, LastB2)
-            print(Current2)
+            #print(Current2)
             toRGB2 = XYZtoRGB(Current2[0], Current2[1], Current2[2])
-            print(toRGB2)
-            print(col2rgbT)
+            #print(toRGB2)
+            #print(col2rgbT)
             squarees(toRGB2, "right")
             squarees(col2rgbT, "left")
             LB = LastB2
@@ -292,7 +292,7 @@ with open('data.csv', mode='a') as data_file:
                     # SAME
                     toBlack()
                     time.sleep(1)
-                    print(curCol)
+                    #print(curCol)
                     if curCol == 1:
                         curCol = 2
                         if Color2:
@@ -301,6 +301,9 @@ with open('data.csv', mode='a') as data_file:
                             LastF2 = take[0]
                             Current2 = take[1]
                             t = finddiff(LastF2, LastB2)
+                            print(LastF2)
+                            print(LastB2)
+                            print(Current2)
                             if t < k:
                                 if Color2:
                                     data_writer.writerow(['Color2'])
@@ -348,6 +351,9 @@ with open('data.csv', mode='a') as data_file:
                             LastB2 = take[0]
                             Current2 = take[1]
                             t = finddiff(LastF2, LastB2)
+                            print(LastF2)
+                            print(LastB2)
+                            print(Current2)
                             print(t)
                             if t < k:
                                 if Color2:
