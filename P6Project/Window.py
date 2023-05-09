@@ -1,5 +1,4 @@
 import csv
-import time
 
 import pygame
 from colormath.color_conversions import convert_color
@@ -204,27 +203,28 @@ with open('data.csv', mode='a') as data_file:
 
     # function for finding the midpoint between two points
     def Sames(g, current):
-        LB = 0
+        LF = 0
         Cur = 0
         if g == 1:
             Current1 = current
             LastF1 = Current1
             Current1 = findMid(LastF1, LastB1)
-            LB = LastB1
+            LF = LastF1
             Cur = Current1
         if g == 2:
             Current2 = current
             LastF2 = Current2
             Current2 = findMid(LastF2, LastB2)
-            LB = LastB2
+            LF = LastF2
             Cur = Current2
         if g == 3:
             Current3 = current
             LastF3 = Current3
             Current3 = findMid(LastF3, LastB3)
-            LB = LastB3
+            LF = LastF3
             Cur = Current3
-        returnerer = [LB, Cur]
+        returnerer = [LF, Cur]
+        print(returnerer)
         return returnerer
 
 
@@ -273,7 +273,7 @@ with open('data.csv', mode='a') as data_file:
                     1] <= height - height / 4 + 40:
                     # SAME
                     toBlack()
-                    time.sleep(1)
+                    # time.sleep(1)
                     # print(curCol)
                     if curCol == 1:
                         if Color1:
@@ -282,6 +282,7 @@ with open('data.csv', mode='a') as data_file:
                             LastF1 = take[0]
                             Current1 = take[1]
                             t = finddiff(LastF1, LastB1)
+                            print(t)
                             if t < k:
                                 if Color1:
                                     data_writer.writerow(['Color1'])
@@ -299,6 +300,7 @@ with open('data.csv', mode='a') as data_file:
                             LastF2 = take[0]
                             Current2 = take[1]
                             t = finddiff(LastF2, LastB2)
+                            print(t)
                             '''
                             print(LastF2)
                             print(LastB2)
@@ -321,6 +323,7 @@ with open('data.csv', mode='a') as data_file:
                             LastF3 = take[0]
                             Current3 = take[1]
                             t = finddiff(LastF3, LastB3)
+                            print(t)
                             if t < k:
                                 if Color3:
                                     data_writer.writerow(['Color3'])
@@ -337,7 +340,7 @@ with open('data.csv', mode='a') as data_file:
                 if width / 4 <= mouse[0] <= width / 4 + 140 and height / 2 <= mouse[1] <= height - height / 4 + 40:
                     # DIFF
                     toBlack()
-                    time.sleep(1)
+                    # time.sleep(1)
                     if curCol == 1:
                         if Color1:
                             c = Current1
