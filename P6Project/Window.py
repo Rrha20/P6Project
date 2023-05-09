@@ -11,7 +11,7 @@ width = 800
 height = 500
 win = pygame.display.set_mode([width, height])
 curCol = 1
-
+k = 0.01
 Color1 = True
 Color2 = True
 Color3 = True
@@ -301,7 +301,7 @@ with open('data.csv', mode='a') as data_file:
                             LastF2 = take[0]
                             Current2 = take[1]
                             t = finddiff(LastF2, LastB2)
-                            if t < 0.05:
+                            if t < k:
                                 if Color2:
                                     data_writer.writerow(['Color2'])
                                     Color2 = False
@@ -315,7 +315,7 @@ with open('data.csv', mode='a') as data_file:
                             Current3 = take[1]
                             t = finddiff(LastF3, LastB3)
                             print(t)
-                            if t < 0.05:
+                            if t < k:
                                 if Color3:
                                     data_writer.writerow(['Color3'])
                                     Color3 = False
@@ -328,7 +328,7 @@ with open('data.csv', mode='a') as data_file:
                             LastF1 = take[0]
                             Current1 = take[1]
                             t = finddiff(LastF1, LastB1)
-                            if t < 0.05:
+                            if t < k:
                                 if Color1:
                                     data_writer.writerow(['Color1'])
                                     Color1 = False
@@ -349,7 +349,7 @@ with open('data.csv', mode='a') as data_file:
                             Current2 = take[1]
                             t = finddiff(LastF2, LastB2)
                             print(t)
-                            if t < 0.05:
+                            if t < k:
                                 if Color2:
                                     data_writer.writerow(['Color2'])
                                     Color2 = False
@@ -363,7 +363,7 @@ with open('data.csv', mode='a') as data_file:
                             LastB3 = take[0]
                             Current3 = take[1]
                             t = finddiff(LastF3, LastB3)
-                            if t < 0.05:
+                            if t < k:
                                 if Color3:
                                     data_writer.writerow(['Color3'])
                                     Color3 = False
@@ -377,7 +377,7 @@ with open('data.csv', mode='a') as data_file:
                             LastB1 = take[0]
                             Current1 = take[1]
                             t = finddiff(LastF1, LastB1)
-                            if t < 0.05:
+                            if t < k:
                                 if Color1:
                                     data_writer.writerow(['Color1'])
                                     Color1 = False
