@@ -116,7 +116,7 @@ with open('data.csv', mode='a') as data_file:
     # Write the header row if the file is empty
     if data_file.tell() == 0:
         data_writer.writerow(['LastB', 'LastF', 'Current'])
-    data_writer.writerow(['Function 1'])
+    data_writer.writerow(['Function 10'])
 
     # Add the values of LastB, LastF, and Current to the CSV file
 
@@ -137,7 +137,7 @@ with open('data.csv', mode='a') as data_file:
                   [-0.6718842280712661, -0.6548995349494559, 0.3459453471172367],
                   [0.5543168124612634, -0.2353554443646269, -0.7983361987475661],
                   ]
-    Fun = Directions[1]
+    Fun = Directions[9]
     # Color 1
     col1T = [0.4, 0.3, 0.7]
     col1P = []
