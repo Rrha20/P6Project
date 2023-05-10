@@ -1,4 +1,5 @@
 import csv
+import time
 
 import pygame
 from colormath.color_conversions import convert_color
@@ -115,6 +116,7 @@ with open('data.csv', mode='a') as data_file:
     # Write the header row if the file is empty
     if data_file.tell() == 0:
         data_writer.writerow(['LastB', 'LastF', 'Current'])
+    data_writer.writerow(['Function 1'])
 
     # Add the values of LastB, LastF, and Current to the CSV file
 
@@ -122,7 +124,7 @@ with open('data.csv', mode='a') as data_file:
     smallfont = pygame.font.SysFont('Corbel', 35)
     # rendering a text written in this font
     text1 = smallfont.render('Same', True, (255, 255, 255))
-    text2 = smallfont.render('Diff', True, (255, 255, 255))
+    text2 = smallfont.render('Different', True, (255, 255, 255))
 
     Directions = [[-0.860898165853627, 0.4207242095148357, 0.2860865036277969],
                   [0.3907130486288363, -0.8869216918721375, 0.24640054001122996],
@@ -135,13 +137,12 @@ with open('data.csv', mode='a') as data_file:
                   [-0.6718842280712661, -0.6548995349494559, 0.3459453471172367],
                   [0.5543168124612634, -0.2353554443646269, -0.7983361987475661],
                   ]
-
+    Fun = Directions[1]
     # Color 1
     col1T = [0.4, 0.3, 0.7]
-    Fun1 = Directions[1]
     col1P = []
     for i in range(3):
-        x = col1T[i] + Fun1[i] / 5
+        x = col1T[i] + Fun[i] / 5
         col1P.append(x)
     # print(col1P)
     print("color 1")
@@ -160,10 +161,9 @@ with open('data.csv', mode='a') as data_file:
 
     # Color 2
     col2T = [0.2, 0.2, 0.5]
-    Fun2 = Directions[1]
     col2P = []
     for i in range(3):
-        x = col2T[i] + Fun2[i] / 5
+        x = col2T[i] + Fun[i] / 5
         col2P.append(x)
     col2rgbP = XYZtoRGB(col2P[0], col2P[1], col2P[2])
     col2rgbT = XYZtoRGB(col2T[0], col2T[1], col2T[2])
@@ -181,10 +181,9 @@ with open('data.csv', mode='a') as data_file:
 
     # Color 3
     col3T = [0.2, 0.4, 0.1]
-    Fun3 = Directions[1]
     col3P = []
     for i in range(3):
-        x = col3T[i] + Fun3[i] / 5
+        x = col3T[i] + Fun[i] / 5
         col3P.append(x)
     col3rgbP = XYZtoRGB(col3P[0], col3P[1], col3P[2])
     col3rgbT = XYZtoRGB(col3T[0], col3T[1], col3T[2])
@@ -273,7 +272,7 @@ with open('data.csv', mode='a') as data_file:
                     1] <= height - height / 4 + 40:
                     # SAME
                     toBlack()
-                    # time.sleep(1)
+                    time.sleep(1)
                     # print(curCol)
                     if curCol == 1:
                         if Color1:
@@ -336,11 +335,15 @@ with open('data.csv', mode='a') as data_file:
                         squarees(toRGB1, "right")
                         squarees(col1rgbT, "left")
                     print(curCol)
+                    if not Color1:
+                        if not Color2:
+                            if not Color3:
+                                pygame.quit()
 
                 if width / 4 <= mouse[0] <= width / 4 + 140 and height / 2 <= mouse[1] <= height - height / 4 + 40:
                     # DIFF
                     toBlack()
-                    # time.sleep(1)
+                    time.sleep(1)
                     if curCol == 1:
                         if Color1:
                             c = Current1
@@ -399,6 +402,10 @@ with open('data.csv', mode='a') as data_file:
                         toRGB1 = XYZtoRGB(Current1[0], Current1[1], Current1[2])
                         squarees(toRGB1, "right")
                         squarees(col1rgbT, "left")
+                    if not Color1:
+                        if not Color2:
+                            if not Color3:
+                                pygame.quit()
 
                     '''
                     print(LastB1)
@@ -431,7 +438,7 @@ with open('data.csv', mode='a') as data_file:
             pygame.draw.rect(win, (100, 100, 100), [width - width / 4 - 140, height - height / 4, 140, 40])
 
         # superimposing the text onto our button
-        win.blit(text1, [width - width / 4 + 30 - 140, height - height / 4 + 5])
+        win.blit(text1, [width - width / 4 +30 - 140, height - height / 4 + 5])
 
         if width / 4 <= mouse[0] <= width / 4 + 140 and height - height / 4 <= mouse[
             1] <= height - height / 4 + 40:
@@ -441,7 +448,7 @@ with open('data.csv', mode='a') as data_file:
             pygame.draw.rect(win, (100, 100, 100), [width / 4, height - height / 4, 140, 40])
 
         # superimposing the text onto our button
-        win.blit(text2, [width / 4 + 30, height - height / 4 + 5])
+        win.blit(text2, [width / 4 + 5, height - height / 4 + 5])
 
         # updates the frames of the game
         pygame.display.update()
