@@ -1,7 +1,7 @@
 import csv
 import time
-
 import pygame
+import numpy as np
 from colormath.color_conversions import convert_color
 from colormath.color_objects import sRGBColor, XYZColor
 
@@ -98,8 +98,9 @@ def findMid(F, B):
     # print(P1)
     P2 = B
     # print(P2)
-    Perc1 = 0.25
-    Perc2 = 0.75
+    r = np.random.uniform(0.05, 0.5)
+    Perc1 = r
+    Perc2 = 1 - r
     a = (P1[0] * Perc1 + P2[0] * Perc2)
     # print(P1[0], Perc1, P2[0], Perc2)
     b = (P1[1] * Perc1 + P2[1] * Perc2)
@@ -272,7 +273,7 @@ with open('data.csv', mode='a') as data_file:
                     1] <= height - height / 4 + 40:
                     # SAME
                     toBlack()
-                    time.sleep(1)
+                    time.sleep(1.5)
                     # print(curCol)
                     if curCol == 1:
                         if Color1:
@@ -290,8 +291,14 @@ with open('data.csv', mode='a') as data_file:
                         curCol = 2
                         print(Current2)
                         toRGB2 = XYZtoRGB(Current2[0], Current2[1], Current2[2])
-                        squarees(toRGB2, "right")
-                        squarees(col2rgbT, "left")
+                        i = np.random.randint(1, 3)
+                        print("i", i)
+                        if i == 1:
+                            squarees(toRGB2, "right")
+                            squarees(col2rgbT, "left")
+                        elif i == 2:
+                            squarees(toRGB2, "left")
+                            squarees(col2rgbT, "right")
                     elif curCol == 2:
                         if Color2:
                             c = Current2
@@ -313,8 +320,15 @@ with open('data.csv', mode='a') as data_file:
                         curCol = 3
                         print(Current3)
                         toRGB3 = XYZtoRGB(Current3[0], Current3[1], Current3[2])
-                        squarees(toRGB3, "right")
-                        squarees(col3rgbT, "left")
+                        i = np.random.randint(1, 3)
+                        print("i", i)
+                        if i == 1:
+                            squarees(toRGB3, "right")
+                            squarees(col3rgbT, "left")
+                        elif i == 2:
+                            squarees(toRGB3, "left")
+                            squarees(col3rgbT, "right")
+
                     elif curCol == 3:
                         if Color3:
                             c = Current3
@@ -332,18 +346,26 @@ with open('data.csv', mode='a') as data_file:
                         curCol = 1
                         print(Current1)
                         toRGB1 = XYZtoRGB(Current1[0], Current1[1], Current1[2])
-                        squarees(toRGB1, "right")
-                        squarees(col1rgbT, "left")
+                        i = np.random.randint(1, 3)
+                        print("i", i)
+                        if i == 1:
+                            squarees(toRGB1, "right")
+                            squarees(col1rgbT, "left")
+                        elif i == 2:
+                            squarees(toRGB1, "left")
+                            squarees(col1rgbT, "right")
+
                     print(curCol)
+                    '''
                     if not Color1:
                         if not Color2:
                             if not Color3:
                                 pygame.quit()
-
+                    '''
                 if width / 4 <= mouse[0] <= width / 4 + 140 and height / 2 <= mouse[1] <= height - height / 4 + 40:
                     # DIFF
                     toBlack()
-                    time.sleep(1)
+                    time.sleep(1.5)
                     if curCol == 1:
                         if Color1:
                             c = Current1
@@ -359,8 +381,15 @@ with open('data.csv', mode='a') as data_file:
                         curCol = 2
                         print(Current2)
                         toRGB2 = XYZtoRGB(Current2[0], Current2[1], Current2[2])
-                        squarees(toRGB2, "right")
-                        squarees(col2rgbT, "left")
+                        i = np.random.randint(1, 3)
+                        print("i", i)
+                        if i == 1:
+                            squarees(toRGB2, "right")
+                            squarees(col2rgbT, "left")
+                        elif i == 2:
+                            squarees(toRGB2, "left")
+                            squarees(col2rgbT, "right")
+
 
                     elif curCol == 2:
                         if Color2:
@@ -382,8 +411,15 @@ with open('data.csv', mode='a') as data_file:
                         curCol = 3
                         print(Current3)
                         toRGB3 = XYZtoRGB(Current3[0], Current3[1], Current3[2])
-                        squarees(toRGB3, "right")
-                        squarees(col3rgbT, "left")
+                        i = np.random.randint(1, 3)
+                        print("i", i)
+                        if i == 1:
+                            squarees(toRGB3, "right")
+                            squarees(col3rgbT, "left")
+                        elif i == 2:
+                            squarees(toRGB3, "left")
+                            squarees(col3rgbT, "right")
+
                     elif curCol == 3:
                         if Color3:
                             c = Current3
@@ -400,13 +436,20 @@ with open('data.csv', mode='a') as data_file:
                         curCol = 1
                         print(Current1)
                         toRGB1 = XYZtoRGB(Current1[0], Current1[1], Current1[2])
-                        squarees(toRGB1, "right")
-                        squarees(col1rgbT, "left")
+                        i = np.random.randint(1, 3)
+                        print("i", i)
+                        if i == 1:
+                            squarees(toRGB1, "right")
+                            squarees(col1rgbT, "left")
+                        elif i == 2:
+                            squarees(toRGB1, "left")
+                            squarees(col1rgbT, "right")
+                    '''
                     if not Color1:
                         if not Color2:
                             if not Color3:
                                 pygame.quit()
-
+                    '''
                     '''
                     print(LastB1)
                     print(LastF1)
