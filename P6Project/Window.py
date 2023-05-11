@@ -121,8 +121,8 @@ with open('data.csv', mode='a') as data_file:
 
     # Write the header row if the file is empty
     if data_file.tell() == 0:
-        data_writer.writerow(['LastB', 'LastF', 'Current'])
-    data_writer.writerow(['Function 10'])
+        data_writer.writerow(['LastB', 'LastF'])
+    data_writer.writerow(['Function 1'])
 
     # Add the values of LastB, LastF, and Current to the CSV file
 
@@ -143,7 +143,7 @@ with open('data.csv', mode='a') as data_file:
                   [-0.6718842280712661, -0.6548995349494559, 0.3459453471172367],
                   [0.5543168124612634, -0.2353554443646269, -0.7983361987475661],
                   ]
-    Fun = Directions[9]
+    Fun = Directions[0]
     # Color 1
     col1T = [0.4, 0.3, 0.7]
     col1P = []
@@ -269,16 +269,19 @@ with open('data.csv', mode='a') as data_file:
             if ev.type == pygame.QUIT:
                 pygame.quit()
 
+            if ev.type == pygame.KEYDOWN:
+                pygame.quit()
+
             # checks if a mouse is clicked
             if ev.type == pygame.MOUSEBUTTONDOWN:
 
                 # if the mouse is clicked on the
                 # button the game is terminated
-                if width - width / 4 - 140 <= mouse[0] <= width - width / 4 and height / 2 <= mouse[
+                if width / 2 + 10 <= mouse[0] <= width / 2 + 150 and height / 2 <= mouse[
                     1] <= height - height / 4 + 40:
                     # SAME
-                    toBlack()
-                    time.sleep(1.5)
+                    #toBlack()
+                    # time.sleep(1.5)
                     # print(curCol)
                     if curCol == 1:
                         if Color1:
@@ -292,7 +295,7 @@ with open('data.csv', mode='a') as data_file:
                                 if Color1:
                                     data_writer.writerow(['Color1'])
                                     Color1 = False
-                                    data_writer.writerow([LastB1, LastF1, Current1])
+                                    data_writer.writerow([LastB1, LastF1])
                         curCol = 2
                         print(Current2)
                         toRGB2 = XYZtoRGB(Current2[0], Current2[1], Current2[2])
@@ -321,7 +324,7 @@ with open('data.csv', mode='a') as data_file:
                                 if Color2:
                                     data_writer.writerow(['Color2'])
                                     Color2 = False
-                                    data_writer.writerow([LastB2, LastF2, Current2])
+                                    data_writer.writerow([LastB2, LastF2])
                         curCol = 3
                         print(Current3)
                         toRGB3 = XYZtoRGB(Current3[0], Current3[1], Current3[2])
@@ -346,7 +349,7 @@ with open('data.csv', mode='a') as data_file:
                                 if Color3:
                                     data_writer.writerow(['Color3'])
                                     Color3 = False
-                                    data_writer.writerow([LastB3, LastF3, Current3])
+                                    data_writer.writerow([LastB3, LastF3])
 
                         curCol = 1
                         print(Current1)
@@ -367,10 +370,10 @@ with open('data.csv', mode='a') as data_file:
                             if not Color3:
                                 pygame.quit()
                     '''
-                if width / 4 <= mouse[0] <= width / 4 + 140 and height / 2 <= mouse[1] <= height - height / 4 + 40:
+                if width/2 - 150 <= mouse[0] <= width/2 - 150+ 140 and height / 2 <= mouse[1] <= height - height / 4 + 40:
                     # DIFF
-                    toBlack()
-                    time.sleep(1.5)
+                    #toBlack()
+                    #time.sleep(1.5)
                     if curCol == 1:
                         if Color1:
                             c = Current1
@@ -382,7 +385,7 @@ with open('data.csv', mode='a') as data_file:
                                 if Color1:
                                     data_writer.writerow(['Color1'])
                                     Color1 = False
-                                    data_writer.writerow([LastB1, LastF1, Current1])
+                                    data_writer.writerow([LastB1, LastF1])
                         curCol = 2
                         print(Current2)
                         toRGB2 = XYZtoRGB(Current2[0], Current2[1], Current2[2])
@@ -412,7 +415,7 @@ with open('data.csv', mode='a') as data_file:
                                 if Color2:
                                     data_writer.writerow(['Color2'])
                                     Color2 = False
-                                    data_writer.writerow([LastB2, LastF2, Current2])
+                                    data_writer.writerow([LastB2, LastF2])
                         curCol = 3
                         print(Current3)
                         toRGB3 = XYZtoRGB(Current3[0], Current3[1], Current3[2])
@@ -436,7 +439,7 @@ with open('data.csv', mode='a') as data_file:
                                 if Color3:
                                     data_writer.writerow(['Color3'])
                                     Color3 = False
-                                    data_writer.writerow([LastB3, LastF3, Current3])
+                                    data_writer.writerow([LastB3, LastF3])
 
                         curCol = 1
                         print(Current1)
