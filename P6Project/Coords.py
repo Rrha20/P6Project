@@ -28,9 +28,8 @@ def drawpoints(Target, Values, col1, col2):
     print(height*TxyY[1])
     for i in V:
         dr = XYZtoxyY(i[0], i[1], i[2])
-        pygame.draw.rect(win, col2, pygame.Rect((width * dr[0] *2, height * dr[1] *2), (5, 5)))
-    pygame.draw.rect(win, col1, pygame.Rect((width * TxyY[0]*2, height * TxyY[1] *2), (5, 5)))
-
+        pygame.draw.rect(win, col2, pygame.Rect((width * dr[0] , height * dr[1] ), (5, 5)))
+    pygame.draw.rect(win, col1, pygame.Rect((width * TxyY[0], height * TxyY[1] ), (5, 5)))
 #pygame.draw.rect(win, color, pygame.Rect((width/2 - 150, height/2 - 75), (140, 140)))
 
 while True:
@@ -42,8 +41,8 @@ while True:
 
         # checks if a mouse is clicked
         if ev.type == pygame.MOUSEBUTTONDOWN:
-            #drawpoints(color3T, color3, (0, 255, 0), (100, 200, 100))
+            drawpoints(color3T, color3, (0, 255, 0), (100, 200, 100))
             drawpoints(color1T, color1, (200, 0, 100), (255, 0, 150))
-            #drawpoints(color2T, color2, (0, 0, 255), (0, 150, 255))
+            drawpoints(color2T, color2, (0, 0, 255), (0, 150, 255))
 
             pygame.display.update()
