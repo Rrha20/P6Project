@@ -13,7 +13,7 @@ win = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 # fills the screen with a color
 black = (0, 0, 0)
 grey = (150, 150, 150)
-BGColor = black
+BGColor = grey
 win.fill(BGColor)
 curCol = 1
 k = 0.005
