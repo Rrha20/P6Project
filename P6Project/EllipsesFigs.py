@@ -10,10 +10,10 @@ Compare the ellipse generated with arcs versus a polygonal approximation.
    This example requires :download:`basic_units.py <basic_units.py>`
 """
 
+import cv2 as cv
+import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import patches
-import matplotlib.pyplot as plt
-import cv2 as cv
 
 
 def XYZtoxyY(X, Y, Z):
@@ -74,35 +74,53 @@ for i in range(len(color1)):
     if i % 2 == 0:
         p = findmid(color1[i][0], color1[i][1])
         col1mids.append(p)
-list = []  # Empty list
+Elist = []  # Empty list
 
 for i in col1mids:  # For loop that converts tuple to floats and appends to a list
     print(i)
     smollist = []
     for j in i:
-        h = str(j)
-        smollist.append(j)
+        h = float(j)
+        print(type(h))
+        smollist.append(h)
     x = smollist
-    list.append(x)
+    print(x)
+    print('x', type(x), type(x[0]), x[0])
+    Elist.append(x)
     smollist = []
-print("list", list)
+print("list", Elist)
 
 print("mids", col1mids)
 print(color1)
+
+print('tuple?', Elist[0], type(Elist))
+'''
 col1XYZ = []
 for i in range(len(color1)):
-    col1 = XYZtoxyY(list[0][i][0], list[0][i][1], list[0][i][2])
+    x1 = Elist[0][i][0]
+    y1 = Elist[0][i][1]
+    z1 = Elist[0][i][2]
+    col1 = XYZtoxyY(x1, y1, z1)
+    col1XYZ.append(col1)
+'''
+
+col1XYZ = []
+for sublist in Elist:
+    x1 = sublist[0]
+    y1 = sublist[1]
+    z1 = sublist[2]
+    col1 = XYZtoxyY(x1, y1, z1)
     col1XYZ.append(col1)
 
 col1np = np.array(col1XYZ, dtype=np.float32)
 print("col1np", col1np)
 print(target)
-ellipse_t = cv.fitEllipse(col1np)
+ellipse_t = cv.fitEllipse(col1np * 2)
 (x, y), (minor, major), angles = ellipse_t
 print(ellipse_t)
 print(x, y, minor, major, angles)
 
-fig = plt.figure()
+fig = plt.figure(figsize=(5, 5))
 ax = fig.add_subplot(211, aspect='auto')
 ax.fill(x, y, alpha=0.2, facecolor='yellow',
         edgecolor='yellow', linewidth=1, zorder=1)
@@ -110,6 +128,10 @@ ax.fill(x, y, alpha=0.2, facecolor='yellow',
 e1 = patches.Ellipse((x, y), minor, major, angles)
 
 ax.add_patch(e1)
+
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1)
+ax.set_box_aspect(1)
 '''
 ax = fig.add_subplot(212, aspect='equal')
 ax.fill(x, y, alpha=0.2, facecolor='green', edgecolor='green', zorder=1)
