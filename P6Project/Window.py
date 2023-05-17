@@ -26,9 +26,9 @@ Color3 = True
 def squarees(col, side):
     color = col
     if side == "left":
-        pygame.draw.rect(win, color, pygame.Rect((width/2 - 150, height/2 - 75), (140, 140)))
+        pygame.draw.rect(win, color, pygame.Rect((width / 2 - 150, height / 2 - 75), (140, 140)))
     if side == "right":
-        pygame.draw.rect(win, color, pygame.Rect((width/2 + 10, height/2 - 75), (140, 140)))
+        pygame.draw.rect(win, color, pygame.Rect((width / 2 + 10, height / 2 - 75), (140, 140)))
 
 
 def toBlack():
@@ -36,21 +36,6 @@ def toBlack():
     squarees(colorer, "left")
     squarees(colorer, "right")
     pygame.display.update()
-
-
-'''
-def toString(a, b, c):
-    x = str(a)
-    y = str(b)
-    z = str(c)
-    return x, y, z
-
-def randomCol():
-    x = random.randint(256)
-    y = random.randint(256)
-    z = random.randint(256)
-    return x, y, z
-'''
 
 
 def XYZtoRGB(x, y, z):
@@ -370,7 +355,8 @@ with open('data.csv', mode='a') as data_file:
                             if not Color3:
                                 pygame.quit()
 
-                if width/2 - 150 <= mouse[0] <= width/2 - 150+ 140 and height / 2 <= mouse[1] <= height - height / 4 + 40:
+                if width / 2 - 150 <= mouse[0] <= width / 2 - 150 + 140 and height / 2 <= mouse[
+                    1] <= height - height / 4 + 40:
                     # DIFF
                     toBlack()
                     time.sleep(1.5)
@@ -472,8 +458,6 @@ with open('data.csv', mode='a') as data_file:
 
                     print(curCol)
 
-
-
         # stores the (x,y) coordinates into
         # the variable as a tuple
         mouse = pygame.mouse.get_pos()
@@ -489,15 +473,15 @@ with open('data.csv', mode='a') as data_file:
         # superimposing the text onto our button
         win.blit(text1, [width / 2 + 10 + 30, height - height / 4 + 5])
 
-        if width/2 - 150 <= mouse[0] <= width/2 - 150+ 140 and height - height / 4 <= mouse[
+        if width / 2 - 150 <= mouse[0] <= width / 2 - 150 + 140 and height - height / 4 <= mouse[
             1] <= height - height / 4 + 40:
-            pygame.draw.rect(win, (170, 170, 170), [width/2 - 150, height - height / 4, 140, 40])
+            pygame.draw.rect(win, (170, 170, 170), [width / 2 - 150, height - height / 4, 140, 40])
 
         else:
-            pygame.draw.rect(win, (100, 100, 100), [width/2 - 150, height - height / 4, 140, 40])
+            pygame.draw.rect(win, (100, 100, 100), [width / 2 - 150, height - height / 4, 140, 40])
 
         # superimposing the text onto our button
-        win.blit(text2, [width/2 - 150+ 5, height - height / 4 + 5])
+        win.blit(text2, [width / 2 - 150 + 5, height - height / 4 + 5])
 
         # updates the frames of the game
         pygame.display.update()
