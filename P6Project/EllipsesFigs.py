@@ -1,15 +1,3 @@
-"""
-==================
-Ellipse with units
-==================
-
-Compare the ellipse generated with arcs versus a polygonal approximation.
-
-.. only:: builder_html
-
-   This example requires :download:`basic_units.py <basic_units.py>`
-"""
-
 import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
@@ -89,7 +77,6 @@ color2 = [[0.20487733868150168, 0.1979291477600964, 0.4929755765377102],
     [0.1960623938116391, 0.20192432312750508, 0.5013085124719419]]
 color2T = [0.2, 0.2, 0.5]
 target2 = XYZtoxyY(0.2, 0.2, 0.5)
-print(target2)
 
 color3 = [[0.10241307872930162, 0.44769109975962207, 0.13242927237329244],
           [0.10441062587506514, 0.4467148908684849, 0.13176546415365648]], [
@@ -123,7 +110,7 @@ color3 = [[0.10241307872930162, 0.44769109975962207, 0.13242927237329244],
     [0.21352461789337948, 0.3942576296035031, 0.0805216226609248]]
 color3T = [0.2, 0.4, 0.1]
 target3 = XYZtoxyY(0.2, 0.4, 0.1)
-print(target3)
+
 '''
 ############# GREY ##################
 
@@ -226,6 +213,7 @@ target3 = XYZtoxyY(0.2, 0.4, 0.1)
 '''
 
 
+# Finds the midpoint of two 3D points
 def findmid(a1, b1):
     x1 = (a1[0] + b1[0]) / 2
     y1 = (a1[1] + b1[1]) / 2
@@ -234,13 +222,13 @@ def findmid(a1, b1):
 
 
 ##################### COLOR 1 ########################
-col1mids = []
-for i in range(len(color1)):
+col1mids = []  # List of midpoints
+for i in range(len(color1)):  # For loop that finds the mid points of all data points
     if i % 2 == 0:
         p = findmid(color1[i][0], color1[i][1])
         col1mids.append(p)
-Elist = []  # Empty list
 
+Elist = []  # Empty list
 for i in col1mids:  # For loop that converts tuple to floats and appends to a list
     smollist = []
     for j in i:
@@ -251,21 +239,23 @@ for i in col1mids:  # For loop that converts tuple to floats and appends to a li
     smollist = []
 
 col1XYZ = []
-for sublist in Elist:
+for sublist in Elist:  # For loop that inputs all xyY data points into a list
     x1 = sublist[0]
     y1 = sublist[1]
     z1 = sublist[2]
-    col1 = XYZtoxyY(x1, y1, z1)
+    col1 = XYZtoxyY(x1, y1, z1)  # Converts all XYZ values to xyY values
     col1XYZ.append(col1)
 
-col1np = np.array(col1XYZ, dtype=np.float32)
-ellipse1 = cv.fitEllipse(col1np)
-(x, y), (minor, major), angles = ellipse1
+col1np = np.array(col1XYZ, dtype=np.float32)  # Convert to numpy array
+ellipse1 = cv.fitEllipse(col1np)  # Uses CV2 function to fit data to an ellipse
+(x, y), (minor, major), angles = ellipse1  # Takes the ellipse data and puts into variables
 
+# Creates a figure to plot the ellipses onto
 fig = plt.figure(figsize=(5, 5))
 ax = fig.add_subplot(211, aspect='auto')
 ax.fill(x, y, alpha=0.2, facecolor='yellow',
         edgecolor='yellow', linewidth=1, zorder=1)
+# Makes the ellipse a patch and plots it on the figure
 e1 = patches.Ellipse((x, y), major, minor, angle=angles)
 ax.add_patch(e1)
 
@@ -329,9 +319,6 @@ for sublist in Glist:
 col3np = np.array(col3XYZ, dtype=np.float32)
 ellipse3 = cv.fitEllipse(col3np)
 (x3, y3), (minor3, major3), angles3 = ellipse3
-print(ellipse1)
-print(ellipse2)
-print(ellipse3)
 
 e3 = patches.Ellipse((x3, y3), major3, minor3, angle=angles3)
 ax.add_patch(e3)
