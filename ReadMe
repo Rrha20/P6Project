@@ -1,0 +1,20 @@
+ReadMe file
+
+Download the project files and unzip the zip file.
+Open the Python files with an IDE such as PyCharm.
+Select an interpretor and install the following packages:
+Pygame
+ColorMath
+OpenCV
+Matplotlib
+
+Run the Window file for the color difference program. It will open in full screen.
+Click the buttons on the screen in accordance to how the user observes the two colors.
+The program will close automatically when done, or the user can press any key to exit.
+Once exited the program will write the results into the CSV file "Data.csv".
+To change the direction vector, change the value of "Fun".
+To change the background color, change the value of BGColor. Choose between "grey" and "black"
+
+Run the EllipsesFigs file to show the ellipses in a system. 
+Change between the results of the black background and the grey background.
+Exit the windows showing the figure by clicking the X in the corner.
